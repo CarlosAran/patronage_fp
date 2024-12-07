@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun MainMenuPreview() {
     PatronageTheme {
         Content()
     }
