@@ -13,3 +13,9 @@ Al iniciar la app se conectará a un repositorio/API/servidor (esto tendré que 
 donde leerá el archivo "version_preguntas.txt" y lo comparará con la versión actual que tenga guardada.
 Si es distinta, entonces descargará el archivo csv con las preguntas e iniciará el proceso de volcado 
 en la base de datos interna de la app.
+
+#main
+Rama estable para producción. No trabajar directamente sobre ella.
+
+#developer
+Rama principal para desarrollo.
