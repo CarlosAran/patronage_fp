@@ -1,5 +1,6 @@
 package com.patronage.patronage.ui
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,24 +18,25 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.patronage.patronage.R
+import com.patronage.patronage.ui.theme.PatronageTheme
 
 @Composable
-fun MainScreen(onOpenScreen: (screenName: String) -> Unit) {
+fun MainScreen(title: String, texto: String, onOpenScreen: (screenName: String) -> Unit) {
     val buttons = listOf(
         Pair("Preguntas", { onOpenScreen("preguntas") }),
         Pair("Eventos", { onOpenScreen("eventos") })
     )
     Scaffold(modifier = Modifier.fillMaxSize(),
-        topBar = { CenteredTopBar("PATRONAGE") },
+        topBar = { CenteredTopBar(title) },
         bottomBar = { CustomBottomBar() },
         content = { paddingValues ->
-            MainContent(buttons, paddingValues)
+            MainContent(buttons, paddingValues, title)
         }
     )
 }
 
 @Composable
-private fun MainContent(buttons: List<Pair<String, () -> Unit>>, paddingValues: PaddingValues) {
+private fun MainContent(buttons: List<Pair<String, () -> Unit>>, paddingValues: PaddingValues, title: String) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -63,8 +65,10 @@ private fun MainContent(buttons: List<Pair<String, () -> Unit>>, paddingValues: 
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable
 fun PreviewMainContent() {
-    MainScreen(onOpenScreen = { /* No-op for preview */ })
+    PatronageTheme() {
+        MainScreen("PATRONAGE", "", onOpenScreen = { /* No-op for preview */ })
+    }
 }

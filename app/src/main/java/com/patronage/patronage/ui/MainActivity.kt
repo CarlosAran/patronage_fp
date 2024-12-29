@@ -1,6 +1,8 @@
 package com.patronage.patronage.ui
 
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -33,17 +35,41 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.patronage.patronage.PatronageApplication
 import com.patronage.patronage.ui.theme.PatronageTheme
 
 class MainActivity : ComponentActivity() {
+    private lateinit var app: PatronageApplication
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        app = application as PatronageApplication
         enableEdgeToEdge()
         setContent {
             PatronageTheme {
                 PatronageApp()
             }
         }
+    }
+
+    override fun onPause() {
+        Log.d(app.TAG, "PatronageApplication onPause")
+        super.onPause()
+    }
+
+    override fun onResume() {
+        Log.d(app.TAG, "PatronageApplication onResume")
+        super.onResume()
+    }
+
+    override fun onStop() {
+        Log.d(app.TAG, "PatronageApplication onStop")
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        Log.d(app.TAG, "PatronageApplication onDestroy")
+        super.onDestroy()
     }
 }
 
@@ -53,18 +79,10 @@ fun PreviewPruebas(){
     ContentPruebas()
 }
 
-@Preview(showBackground = true, name = "Light Mode")
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable
 fun PreviewLightMode() {
-    PatronageTheme(darkTheme = false) {
-        PatronageApp()
-    }
-}
-
-//@Preview(showBackground = true, name = "Dark Mode")
-@Composable
-fun PreviewDarkMode() {
-    PatronageTheme(darkTheme = true) {
+    PatronageTheme() {
         PatronageApp()
     }
 }
