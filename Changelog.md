@@ -1,0 +1,20 @@
+Tarea 1:
+*(NEW) Esqueleto de la pantalla principal
+*(NEW) Sistema de navegación.
+*(NEW) Pantalla de "Preguntas".
+*(NEW) Pantalla de "Eventos".
+*(ENH) Reestructuración de la app.
+*(FIX) Padding values.
+
+Tarea 2:
+*(NEW) Clase Application.
+*(ENH) Nombre Application en el Manifest.
+*(FIX) Arreglo Previews.
+*(FIX) Arreglo "dynamicColor" para que funcione el tema personalizado.
+*(NEW) Logs Ciclo de vida de la MainActivity.
+*(NEW) Implementado Room
+*(NEW) Entidades, interfaces DAO y creación de la BDD.
+*(ENH) Subir versión Kotlin a la 2.1.0
+*(FIX) Añadir EventoBean a la BDD.
+*(NEW): Permisos de acceso a Internet y almacenamiento.
+*(ENH) Fijada la orientación del MainActivity en vertical.
