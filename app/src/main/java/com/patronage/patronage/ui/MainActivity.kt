@@ -1,11 +1,16 @@
 package com.patronage.patronage.ui
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -22,6 +27,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -35,10 +41,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.patronage.patronage.PatronageApplication
-import com.patronage.patronage.ui.theme.PatronageTheme
 import androidx.room.Room
+import com.patronage.patronage.PatronageApplication
 import com.patronage.patronage.data.AppDB
+import com.patronage.patronage.ui.theme.PatronageTheme
 
 class MainActivity : ComponentActivity() {
     private lateinit var app: PatronageApplication
@@ -57,8 +63,38 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
+            //Controlo qué ocurre con los permisos
+            val permissionLauncher = rememberLauncherForActivityResult(
+                ActivityResultContracts.RequestMultiplePermissions()
+            ) {permissions ->
+                permissions.forEach { (permission, isGranted) ->
+                    Log.d("permisos", "$permission: $isGranted")
+                }
+            }
+            
             PatronageTheme {
                 PatronageApp()
+
+                //Pido los permisos al usuario
+                LaunchedEffect(Unit) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        permissionLauncher.launch(
+                            arrayOf(
+                                Manifest.permission.READ_MEDIA_IMAGES,
+                                Manifest.permission.READ_MEDIA_VIDEO,
+                                Manifest.permission.READ_MEDIA_AUDIO
+                            )
+                        )
+                    } else {
+                        permissionLauncher.launch(
+                            arrayOf(
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            )
+                        )
+                    }
+                }
+
             }
         }
     }
