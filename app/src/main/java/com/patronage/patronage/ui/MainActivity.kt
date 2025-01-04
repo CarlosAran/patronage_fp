@@ -37,6 +37,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.patronage.patronage.PatronageApplication
 import com.patronage.patronage.ui.theme.PatronageTheme
+import androidx.room.Room
+import com.patronage.patronage.data.AppDB
 
 class MainActivity : ComponentActivity() {
     private lateinit var app: PatronageApplication
@@ -44,6 +46,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app = application as PatronageApplication
+
+        //Inicializo la base de datos
+        val db = Room.databaseBuilder(
+            this,
+            AppDB::class.java, "app-database"
+        ).build()
+        val preguntaDao = db.preguntaDao()
+        val eventoDao = db.eventoDao()
+
         enableEdgeToEdge()
         setContent {
             PatronageTheme {
