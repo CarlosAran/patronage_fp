@@ -1,0 +1,108 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "b3aef2bfad70fef241e6fa28d2a6b4e3",
+    "entities": [
+      {
+        "tableName": "PreguntaBean",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `texto` TEXT NOT NULL, `resp_1` TEXT NOT NULL, `resp_2` TEXT NOT NULL, `resp_3` TEXT NOT NULL, `resp_4` TEXT NOT NULL, `resp_correcta` INTEGER NOT NULL, `recompensa` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "texto",
+            "columnName": "texto",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "resp_1",
+            "columnName": "resp_1",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "resp_2",
+            "columnName": "resp_2",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "resp_3",
+            "columnName": "resp_3",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "resp_4",
+            "columnName": "resp_4",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "resp_correcta",
+            "columnName": "resp_correcta",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recompensa",
+            "columnName": "recompensa",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "EventoBean",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `texto` TEXT NOT NULL, `tipo` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "texto",
+            "columnName": "texto",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tipo",
+            "columnName": "tipo",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b3aef2bfad70fef241e6fa28d2a6b4e3')"
+    ]
+  }
+}
