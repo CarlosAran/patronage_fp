@@ -18,3 +18,5 @@ Tarea 2:
 *(FIX) Añadir EventoBean a la BDD.
 *(NEW): Permisos de acceso a Internet y almacenamiento.
 *(ENH) Fijada la orientación del MainActivity en vertical.
+
+*(ENH): Nuevas funciones en Interfaces DAO.

@@ -44,7 +44,12 @@ import androidx.navigation.NavController
 import androidx.room.Room
 import com.patronage.patronage.PatronageApplication
 import com.patronage.patronage.data.AppDB
+import com.patronage.patronage.data.PreguntaBean
 import com.patronage.patronage.ui.theme.PatronageTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity() {
     private lateinit var app: PatronageApplication
@@ -55,11 +60,23 @@ class MainActivity : ComponentActivity() {
 
         //Inicializo la base de datos
         val db = Room.databaseBuilder(
-            this,
-            AppDB::class.java, "app-database"
+            applicationContext,
+            AppDB::class.java, "PatronageDB-Room"
         ).build()
         val preguntaDao = db.preguntaDao()
         val eventoDao = db.eventoDao()
+
+        GlobalScope.launch(context = Dispatchers.IO) {
+            withContext(Dispatchers.IO){
+                Log.d("GlobalScope", "launch: ${Thread.currentThread()}")
+                db.preguntaDao().insertAll(NewPreguntaBean("¿Cuánto es uno más uno?", "5", "2", "3", "1", 2, "Ganas 2 monedas"))
+                val preguntas = db.preguntaDao().getAll();
+                preguntas.forEach{
+                    Log.d("PatronageDB-Room", "Room ${it.id} ${it.texto} ${it.resp_1} ${it.resp_2} ${it.resp_3} ${it.resp_4} ${it.resp_correcta} ${it.recompensa}")
+                }
+            }
+        }
+
 
         enableEdgeToEdge()
         setContent {
@@ -97,6 +114,18 @@ class MainActivity : ComponentActivity() {
 
             }
         }
+    }
+
+    private fun NewPreguntaBean(texto: String, resp_1: String, resp_2: String, resp_3: String, resp_4: String, resp_correcta: Int, recompensa : String): PreguntaBean {
+        return PreguntaBean(
+            texto = texto,
+            resp_1 = resp_1,
+            resp_2 = resp_2,
+            resp_3 = resp_3,
+            resp_4 = resp_4,
+            resp_correcta = resp_correcta,
+            recompensa = recompensa
+        )
     }
 
     override fun onPause() {
