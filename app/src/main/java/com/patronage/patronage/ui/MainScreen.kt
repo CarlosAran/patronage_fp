@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,13 +31,13 @@ fun MainScreen(title: String, texto: String, onOpenScreen: (screenName: String) 
         topBar = { CenteredTopBar(title) },
         bottomBar = { CustomBottomBar() },
         content = { paddingValues ->
-            MainContent(buttons, paddingValues, title)
+            MainContent(buttons, paddingValues, title, texto)
         }
     )
 }
 
 @Composable
-private fun MainContent(buttons: List<Pair<String, () -> Unit>>, paddingValues: PaddingValues, title: String) {
+private fun MainContent(buttons: List<Pair<String, () -> Unit>>, paddingValues: PaddingValues, title: String, texto: String) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -60,6 +61,7 @@ private fun MainContent(buttons: List<Pair<String, () -> Unit>>, paddingValues: 
                     texto = button.first,
                     onClick = button.second
                 )
+                Text(text = texto)
             }
         }
     }

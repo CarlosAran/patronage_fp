@@ -19,4 +19,5 @@ Tarea 2:
 *(NEW): Permisos de acceso a Internet y almacenamiento.
 *(ENH) Fijada la orientación del MainActivity en vertical.
 
-*(ENH): Nuevas funciones en Interfaces DAO.
+*(ENH) Nuevas funciones en Interfaces DAO.
+*(NEW) Prueba API de internet (lo dejo como referencia para más adelante).
