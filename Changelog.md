@@ -21,3 +21,8 @@ Tarea 2:
 
 *(ENH) Nuevas funciones en Interfaces DAO.
 *(NEW) Prueba API de internet (lo dejo como referencia para más adelante).
+
+Tarea 3:
+*(NEW) Nuevas funciones Interfaces DAO.
+*(NEW) Implementación SQLite y testeo en MainActivity.
+*(ENH) Nuevos campos "leida" y "leido" en las entidades "Preguntas" y "Eventos" respectivamente.

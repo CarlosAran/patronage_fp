@@ -11,5 +11,6 @@ data class PreguntaBean(
     val resp_3: String,
     val resp_4: String,
     val resp_correcta: Int,
-    val recompensa: String
+    val recompensa: String,
+    val leida: Int = 0                  //0: No leída; 1: Leída en esta sesión
 )

@@ -1,7 +1,6 @@
 package com.patronage.patronage.ui
 
 import android.Manifest
-import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -42,9 +41,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.patronage.patronage.PatronageApplication
 import com.patronage.patronage.data.AppDB
 import com.patronage.patronage.data.PreguntaBean
+import com.patronage.patronage.data.sqlite.SQLiteHelper
 import com.patronage.patronage.ui.theme.PatronageTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -58,22 +60,55 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         app = application as PatronageApplication
 
-        //Inicializo la base de datos
+        //Inicializo la base de datos Room
         val db = Room.databaseBuilder(
             applicationContext,
             AppDB::class.java, "PatronageDB-Room"
-        ).build()
+        ).addMigrations(AppDB.MIGRATION_2_3)
+            .build()
+
         val preguntaDao = db.preguntaDao()
         val eventoDao = db.eventoDao()
 
         GlobalScope.launch(context = Dispatchers.IO) {
             withContext(Dispatchers.IO){
                 Log.d("GlobalScope", "launch: ${Thread.currentThread()}")
+
+                // Crear registros en la base de datos de Room y mostrarlos en el log
                 db.preguntaDao().insertAll(NewPreguntaBean("¿Cuánto es uno más uno?", "5", "2", "3", "1", 2, "Ganas 2 monedas"))
                 val preguntas = db.preguntaDao().getAll();
                 preguntas.forEach{
-                    Log.d("PatronageDB-Room", "Room ${it.id} ${it.texto} ${it.resp_1} ${it.resp_2} ${it.resp_3} ${it.resp_4} ${it.resp_correcta} ${it.recompensa}")
+                    Log.d("PatronageDB-Room", "Room ${it.toString()}")
                 }
+
+
+                // Operaciones CRUD en SQLite
+                val dbHelper = SQLiteHelper(this@MainActivity)
+                val dbSQLite = dbHelper.writableDatabase
+
+                // Inserto datos
+                val newId = dbHelper.insertEvento(0, "Evento 1")
+                Log.d("PatronageDB-SQLite", "Inserted row ID: $newId")
+                // Query y mostrar en log
+                val eventos = dbHelper.getAllEventos()
+                eventos.forEach { evento ->
+                    Log.d("PatronageDB-SQLite", "Evento: $evento")
+                }
+
+                // Hago un update en el campo "leido"
+                val rowsUpdated = dbHelper.updateEvento(newId.toInt(), 1, "Updated Evento")
+                Log.d("PatronageDB-SQLite", "Rows updated: $rowsUpdated")
+                // Query y mostrar en log
+                val eventos2 = dbHelper.getAllEventos()
+                eventos2.forEach { evento ->
+                    Log.d("PatronageDB-SQLite", "Evento: $evento")
+                }
+
+                //Elimino el registro que acabo de añadir
+                val rowsDeleted = dbHelper.deleteEvento(newId.toInt())
+                Log.d("PatronageDB-SQLite", "Rows deleted: $rowsDeleted")
+
+                dbSQLite.close()
             }
         }
 
@@ -88,7 +123,7 @@ class MainActivity : ComponentActivity() {
                     Log.d("permisos", "$permission: $isGranted")
                 }
             }
-            
+
             PatronageTheme {
                 PatronageApp()
 
