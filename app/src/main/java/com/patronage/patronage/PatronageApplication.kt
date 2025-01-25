@@ -35,6 +35,7 @@ class PatronageApplication : Application() {
     override fun onTerminate() {
         Log.d(TAG, "PatronageApplication onTerminate")
         super.onTerminate()
+        database.close()
     }
 
     override fun onLowMemory() {
