@@ -59,13 +59,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app = application as PatronageApplication
-
-        //Inicializo la base de datos Room
-        val db = Room.databaseBuilder(
-            applicationContext,
-            AppDB::class.java, "PatronageDB-Room"
-        ).addMigrations(AppDB.MIGRATION_2_3)
-            .build()
+        //Llamo a la base de datos Room
+        val db = app.database
 
         val preguntaDao = db.preguntaDao()
         val eventoDao = db.eventoDao()

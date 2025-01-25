@@ -26,3 +26,5 @@ Tarea 3:
 *(NEW) Nuevas funciones Interfaces DAO.
 *(NEW) Implementación SQLite y testeo en MainActivity.
 *(ENH) Nuevos campos "leida" y "leido" en las entidades "Preguntas" y "Eventos" respectivamente.
+
+*(ENH) Movida creación de la base de datos a la clase Application.

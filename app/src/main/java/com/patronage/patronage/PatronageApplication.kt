@@ -3,12 +3,22 @@ package com.patronage.patronage
 import android.app.Application
 import android.content.res.Configuration
 import android.util.Log
+import androidx.room.Room
+import com.patronage.patronage.data.AppDB
 
 class PatronageApplication : Application() {
     val TAG = "PatronageApplication"
     override fun onCreate() {
         super.onCreate()
-        Log.d(TAG, "PatronageApplication onCreate")
+    }
+
+    val database: AppDB by lazy {
+        Room.databaseBuilder(
+            this,
+            AppDB::class.java,
+            "PatronageDB-Room"
+        ).addMigrations(AppDB.MIGRATION_2_3)
+            .build()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
