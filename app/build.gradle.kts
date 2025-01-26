@@ -1,9 +1,12 @@
 plugins {
+    val ksp_version = "2.1.0-1.0.29"
+
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
-    id("com.google.devtools.ksp") version "2.1.0-1.0.29"
+    id("com.google.devtools.ksp")// version "$ksp_version"
     kotlin("plugin.serialization") version "2.1.0"
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -57,6 +60,8 @@ android {
 }
 
 dependencies {
+    val room_version = "2.6.1"
+    val hilt_version = "2.51.1"
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -75,8 +80,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(libs.androidx.navigation.compose)
-
-    val room_version = "2.6.1"
 
     implementation("androidx.room:room-runtime:$room_version")
     // If this project uses any Kotlin source, use Kotlin Symbol Processing (KSP)
@@ -102,6 +105,12 @@ dependencies {
     implementation(libs.jakewharton.retrofit2.kotlinx.serialization.converter)
     implementation(libs.kotlinx.serialization.json)
 
+    implementation("com.google.dagger:hilt-android:$hilt_version")
+    ksp("com.google.dagger:hilt-compiler:$hilt_version")
+    ksp("com.google.dagger:hilt-android-compiler:$hilt_version")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 }
 
 ksp {

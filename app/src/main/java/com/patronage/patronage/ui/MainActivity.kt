@@ -40,19 +40,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.room.Room
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.patronage.patronage.PatronageApplication
-import com.patronage.patronage.data.AppDB
 import com.patronage.patronage.data.PreguntaBean
 import com.patronage.patronage.data.sqlite.SQLiteHelper
 import com.patronage.patronage.ui.theme.PatronageTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private lateinit var app: PatronageApplication
 
@@ -62,21 +60,19 @@ class MainActivity : ComponentActivity() {
         //Llamo a la base de datos Room
         val db = app.database
 
-        val preguntaDao = db.preguntaDao()
-        val eventoDao = db.eventoDao()
-
         GlobalScope.launch(context = Dispatchers.IO) {
             withContext(Dispatchers.IO){
                 Log.d("GlobalScope", "launch: ${Thread.currentThread()}")
 
                 // Crear registros en la base de datos de Room y mostrarlos en el log
-                db.preguntaDao().insertAll(NewPreguntaBean("¿Cuánto es uno más uno?", "5", "2", "3", "1", 2, "Ganas 2 monedas"))
+                //db.preguntaDao().insertAll(NewPreguntaBean("¿Cuánto es uno más uno?", "5", "2", "3", "1", 2, "Ganas 2 monedas"))
                 val preguntas = db.preguntaDao().getAll();
                 preguntas.forEach{
                     Log.d("PatronageDB-Room", "Room ${it.toString()}")
                 }
 
 
+        //SQLite (borrar para release)
                 // Operaciones CRUD en SQLite
                 val dbHelper = SQLiteHelper(this@MainActivity)
                 val dbSQLite = dbHelper.writableDatabase
@@ -105,6 +101,7 @@ class MainActivity : ComponentActivity() {
 
                 dbSQLite.close()
             }
+    //Fin SQLite
         }
 
 
@@ -115,12 +112,12 @@ class MainActivity : ComponentActivity() {
                 ActivityResultContracts.RequestMultiplePermissions()
             ) {permissions ->
                 permissions.forEach { (permission, isGranted) ->
-                    Log.d("permisos", "$permission: $isGranted")
+                    //Log.d("permisos", "$permission: $isGranted")
                 }
             }
 
             PatronageTheme {
-                PatronageApp()
+                PatronageApp()          //Tareas en segundo plano con comprobaciones y configuraciones
 
                 //Pido los permisos al usuario
                 LaunchedEffect(Unit) {

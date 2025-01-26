@@ -5,7 +5,9 @@ import android.content.res.Configuration
 import android.util.Log
 import androidx.room.Room
 import com.patronage.patronage.data.AppDB
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class PatronageApplication : Application() {
     val TAG = "PatronageApplication"
     override fun onCreate() {

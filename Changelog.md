@@ -28,3 +28,9 @@ Tarea 3:
 *(ENH) Nuevos campos "leida" y "leido" en las entidades "Preguntas" y "Eventos" respectivamente.
 
 *(ENH) Movida creación de la base de datos a la clase Application.
+
+Tarea 4:
+*(ENH) Llamar a la API sólo si hay conexión a internet.
+*(NEW) Implementar Hilt.
+*(NEW) Implementar ViewModel.
+*(ENH) Preguntas y respuestas se muestran en pantalla sacándolas de la BDD (falta usar StateFlow)
