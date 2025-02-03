@@ -39,3 +39,5 @@ Tarea 4:
 *(ENH) Acceso a una API de Internet utilizando Retrofit.
 *(ENH) Añadir ViewModels a MainScreen y a EventosScreen.
 *(ENH) Limpiada la clase MainActivity.
+*(ENH) Implementación de StateFlow en los ViewModels.
+*(FIX) Quitar fijar pantalla a modo Retrato.

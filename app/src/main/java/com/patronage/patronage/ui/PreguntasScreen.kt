@@ -12,6 +12,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,26 +26,29 @@ import com.patronage.patronage.ui.theme.PatronageTheme
 
 @Composable
 fun PreguntasScreen(navController: NavController, vm: PreguntasViewModel = hiltViewModel()) {
-    val pregunta = vm.state.pregunta    //Observer
-    val error = vm.state.error          //Observer
+    val state by vm.state.collectAsState() // Observer StateFlow
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = { CenteredTopBar("PATRONAGE") },
         bottomBar = { CustomBottomBar() },
         content = { paddingValues ->
-            if (pregunta != null) {
-                PreguntasContent(navController, paddingValues, pregunta, error)
+            if (state.pregunta != null) {
+                PreguntasContent(navController, paddingValues, state.pregunta!!, state.error)
             } else {
-                Text(
-                    text = "Cargando pregunta...",
+                Column(
                     modifier = Modifier
                         .padding(paddingValues)
                         .padding(horizontal = Dimens.screenPadding, vertical = Dimens.screenPadding)
                         .fillMaxSize(),
-                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
-                )
-                BackButton(navController)
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Cargando pregunta...",
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                    )
+                    BackButton(navController)
+                }
             }
         }
     )

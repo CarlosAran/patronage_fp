@@ -1,13 +1,12 @@
 package com.patronage.patronage.ui
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.patronage.patronage.data.PreguntaBean
 import com.patronage.patronage.data.PreguntaDao
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,8 +14,10 @@ import javax.inject.Inject
 class PreguntasViewModel @Inject constructor(
     private val preguntaDao: PreguntaDao
 ) : ViewModel() {
-    var state by mutableStateOf(PreguntasState())
-        private set
+    // StateFlow que expone el estado actual de las preguntas
+    private val _state = MutableStateFlow(PreguntasState())
+    val state: StateFlow<PreguntasState> get() = _state  // Exponer como StateFlow inmutable
+
     init {
         loadPregunta()
     }
@@ -35,13 +36,13 @@ class PreguntasViewModel @Inject constructor(
                     randomPregunta = preguntaDao.getRandomPregunta()
                 }
                 if (randomPregunta != null) {
-                    state = state.copy(pregunta = randomPregunta)
+                    _state.value = _state.value.copy(pregunta = randomPregunta)
                     preguntaDao.marcarPreguntaLeida(randomPregunta.id)
                 } else {
-                    state = state.copy(error = "No se han podido cargar las preguntas, por favor reinicie la aplicación")
+                    _state.value = _state.value.copy(error = "No se han podido cargar las preguntas, por favor reinicie la aplicación")
                 }
             } catch (e: Throwable) {
-                state = state.copy(error = "No se han podido cargar las preguntas, por favor reinicie la aplicación")
+                _state.value = _state.value.copy(error = "No se han podido cargar las preguntas, por favor reinicie la aplicación")
             }
         }
     }

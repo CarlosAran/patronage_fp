@@ -1,13 +1,12 @@
 package com.patronage.patronage.ui
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.patronage.patronage.data.EventoBean
 import com.patronage.patronage.data.EventoDao
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,8 +14,10 @@ import javax.inject.Inject
 class EventosViewModel @Inject constructor(
     private val eventoDao: EventoDao
 ) : ViewModel() {
-    var state by mutableStateOf(EventosState())
-        private set
+    // StateFlow que expone el estado actual de las preguntas
+    private val _state = MutableStateFlow(EventosState())
+    val state: StateFlow<EventosState> get() = _state  // Exponer como StateFlow inmutable
+
     init {
         loadEvento()
     }
@@ -35,13 +36,13 @@ class EventosViewModel @Inject constructor(
                     randomEvento = eventoDao.getRandomEvento()
                 }
                 if (randomEvento != null) {
-                    state = state.copy(evento = randomEvento)
+                    _state.value = _state.value.copy(evento = randomEvento)
                     eventoDao.marcarEventoLeido(randomEvento.id)
                 } else {
-                    state = state.copy(error = "No se han podido cargar los eventos, por favor reinicie la aplicación")
+                    _state.value = _state.value.copy(error = "No se han podido cargar los eventos, por favor reinicie la aplicación")
                 }
             } catch (e: Throwable) {
-                state = state.copy(error = "No se han podido cargar los eventos, por favor reinicie la aplicación")
+                _state.value = _state.value.copy(error = "No se han podido cargar los eventos, por favor reinicie la aplicación")
             }
         }
     }
