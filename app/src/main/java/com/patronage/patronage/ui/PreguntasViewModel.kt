@@ -15,25 +15,34 @@ import javax.inject.Inject
 class PreguntasViewModel @Inject constructor(
     private val preguntaDao: PreguntaDao
 ) : ViewModel() {
-    var state by mutableStateOf(UiState())
+    var state by mutableStateOf(PreguntasState())
         private set
     init {
         loadPregunta()
     }
-    data class UiState(
-        val pregunta: PreguntaBean? = null
+    data class PreguntasState(
+        val pregunta: PreguntaBean? = null,
+        val error: String? = null
     )
 
     //Operaciones en la BDD
     fun loadPregunta() {
         viewModelScope.launch {
-            val randomPregunta = preguntaDao.getRandomPregunta()
-            state = state.copy(pregunta = randomPregunta)
-        }
-    }
-    fun resetPreguntas() {
-        viewModelScope.launch {
-            preguntaDao.resetPreguntas()
+            try {
+                var randomPregunta = preguntaDao.getRandomPregunta()
+                if (randomPregunta == null) {
+                    preguntaDao.resetPreguntas()
+                    randomPregunta = preguntaDao.getRandomPregunta()
+                }
+                if (randomPregunta != null) {
+                    state = state.copy(pregunta = randomPregunta)
+                    preguntaDao.marcarPreguntaLeida(randomPregunta.id)
+                } else {
+                    state = state.copy(error = "No se han podido cargar las preguntas, por favor reinicie la aplicación")
+                }
+            } catch (e: Throwable) {
+                state = state.copy(error = "No se han podido cargar las preguntas, por favor reinicie la aplicación")
+            }
         }
     }
 }

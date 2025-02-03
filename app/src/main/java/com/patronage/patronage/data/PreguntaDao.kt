@@ -3,14 +3,13 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Update
 
 @Dao
 interface PreguntaDao {
     @Query("SELECT * FROM PreguntaBean")
     suspend fun getAll(): List<PreguntaBean>
     @Query("SELECT * FROM PreguntaBean WHERE leida = 0 ORDER BY RANDOM() LIMIT 1;")
-    suspend fun getRandomPregunta(): PreguntaBean
+    suspend fun getRandomPregunta(): PreguntaBean?
 
     @Insert
     suspend fun insertaPregunta(pregunta: PreguntaBean)

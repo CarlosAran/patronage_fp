@@ -22,6 +22,7 @@ import com.patronage.patronage.ui.theme.PatronageTheme
 @Composable
 fun PreguntasScreen(vm: PreguntasViewModel = hiltViewModel()) {
     val pregunta = vm.state.pregunta    //Observer
+    val error = vm.state.error    //Observer
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -29,7 +30,7 @@ fun PreguntasScreen(vm: PreguntasViewModel = hiltViewModel()) {
         bottomBar = { CustomBottomBar() },
         content = { paddingValues ->
             if (pregunta != null) {
-                PreguntasContent(paddingValues, pregunta) // Pass the question to content
+                PreguntasContent(paddingValues, pregunta, error)
             } else {
                 Text(
                     text = "Cargando pregunta...",
@@ -49,7 +50,7 @@ fun PreguntasScreen(vm: PreguntasViewModel = hiltViewModel()) {
 
 
 @Composable
-private fun PreguntasContent(paddingValues: PaddingValues, pregunta: PreguntaBean) {
+private fun PreguntasContent(paddingValues: PaddingValues, pregunta: PreguntaBean, error: String?) {
     Column(
         modifier = Modifier
             .padding(paddingValues)
@@ -58,7 +59,7 @@ private fun PreguntasContent(paddingValues: PaddingValues, pregunta: PreguntaBea
     ) {
         // Display the question text
         Text(
-            text = pregunta.texto
+            text = error ?: pregunta.texto
         )
         // Display answers as buttons
         Button(onClick = { responder(1) }) { Text(pregunta.resp_1) }

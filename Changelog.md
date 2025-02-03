@@ -34,3 +34,5 @@ Tarea 4:
 *(NEW) Implementar Hilt.
 *(NEW) Implementar ViewModel.
 *(ENH) Preguntas y respuestas se muestran en pantalla sacándolas de la BDD (falta usar StateFlow)
+*(ENH) Lógica de marcar preguntas como leídas y reiniciar lista de preguntas si ya se han leído todas.
+*(ENH) Control de errores en queries a Preguntas. 
