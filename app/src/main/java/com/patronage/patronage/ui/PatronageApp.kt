@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -37,6 +38,7 @@ data class MainState (
 fun PatronageApp() {
     val state = MainState()
     val navController = rememberNavController()
+    val mainViewModel: MainViewModel = hiltViewModel()
     var jokeString by androidx.compose.runtime.remember { mutableStateOf("") }
 
     //Navegación
@@ -44,10 +46,12 @@ fun PatronageApp() {
         //Estados para la navegación
         composable("Main"){
             //MainScreen(){ navController.navigate("Preguntas") }
-            MainScreen(state.title, "$jokeString") { screenName -> AbrirPantalla(navController, screenName) }
+            MainScreen(state.title, "$jokeString") { screenName ->
+                mainViewModel.AbrirPantalla(navController, screenName)
+            }
         }
-        composable("Preguntas") { PreguntasScreen() }
-        composable("Eventos") { EventosScreen() }
+        composable("Preguntas") { PreguntasScreen(navController) }
+        composable("Eventos") { EventosScreen(navController) }
     }
 
     //Llamada a API

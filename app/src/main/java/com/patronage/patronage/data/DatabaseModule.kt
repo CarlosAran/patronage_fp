@@ -33,4 +33,23 @@ object DatabaseModule {
     fun provideEventoDao(database: AppDB): EventoDao {
         return database.eventoDao()
     }
+
+    private fun newPreguntaBean(texto: String, resp_1: String, resp_2: String, resp_3: String, resp_4: String, resp_correcta: Int, recompensa : String): PreguntaBean {
+        return PreguntaBean(
+            texto = texto,
+            resp_1 = resp_1,
+            resp_2 = resp_2,
+            resp_3 = resp_3,
+            resp_4 = resp_4,
+            resp_correcta = resp_correcta,
+            recompensa = recompensa
+        )
+    }
+
+    private fun newEventoBean(texto: String, tipo: Int): EventoBean {
+        return EventoBean(
+            texto = texto,
+            tipo = tipo
+        )
+    }
 }

@@ -16,13 +16,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.patronage.patronage.data.PreguntaBean
+import com.patronage.patronage.ui.theme.Dimens
 import com.patronage.patronage.ui.theme.PatronageTheme
 
 @Composable
-fun PreguntasScreen(vm: PreguntasViewModel = hiltViewModel()) {
+fun PreguntasScreen(navController: NavController, vm: PreguntasViewModel = hiltViewModel()) {
     val pregunta = vm.state.pregunta    //Observer
-    val error = vm.state.error    //Observer
+    val error = vm.state.error          //Observer
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -30,15 +33,17 @@ fun PreguntasScreen(vm: PreguntasViewModel = hiltViewModel()) {
         bottomBar = { CustomBottomBar() },
         content = { paddingValues ->
             if (pregunta != null) {
-                PreguntasContent(paddingValues, pregunta, error)
+                PreguntasContent(navController, paddingValues, pregunta, error)
             } else {
                 Text(
                     text = "Cargando pregunta...",
                     modifier = Modifier
                         .padding(paddingValues)
+                        .padding(horizontal = Dimens.screenPadding, vertical = Dimens.screenPadding)
                         .fillMaxSize(),
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center
                 )
+                BackButton(navController)
             }
         }
     )
@@ -50,18 +55,17 @@ fun PreguntasScreen(vm: PreguntasViewModel = hiltViewModel()) {
 
 
 @Composable
-private fun PreguntasContent(paddingValues: PaddingValues, pregunta: PreguntaBean, error: String?) {
+private fun PreguntasContent(navController: NavController, paddingValues: PaddingValues, pregunta: PreguntaBean, error: String?) {
     Column(
         modifier = Modifier
             .padding(paddingValues)
+            .padding(horizontal = Dimens.screenPadding, vertical = Dimens.screenPadding)
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        // Display the question text
         Text(
             text = error ?: pregunta.texto
         )
-        // Display answers as buttons
         Button(onClick = { responder(1) }) { Text(pregunta.resp_1) }
         Button(onClick = { responder(2) }) { Text(pregunta.resp_2) }
         Button(onClick = { responder(3) }) { Text(pregunta.resp_3) }
@@ -73,8 +77,10 @@ private fun PreguntasContent(paddingValues: PaddingValues, pregunta: PreguntaBea
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable
 fun PreguntasPreview() {
+    val navController = rememberNavController()
+
     PatronageTheme() {
-        PreguntasScreen()
+        PreguntasScreen(navController)
     }
 }
 

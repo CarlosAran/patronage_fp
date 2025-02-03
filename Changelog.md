@@ -37,3 +37,5 @@ Tarea 4:
 *(ENH) Lógica de marcar preguntas como leídas y reiniciar lista de preguntas si ya se han leído todas.
 *(ENH) Control de errores en queries a Preguntas.
 *(ENH) Acceso a una API de Internet utilizando Retrofit.
+*(ENH) Añadir ViewModels a MainScreen y a EventosScreen.
+*(ENH) Limpiada la clase MainActivity.
