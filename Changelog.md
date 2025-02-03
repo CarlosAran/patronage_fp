@@ -35,4 +35,5 @@ Tarea 4:
 *(NEW) Implementar ViewModel.
 *(ENH) Preguntas y respuestas se muestran en pantalla sacándolas de la BDD (falta usar StateFlow)
 *(ENH) Lógica de marcar preguntas como leídas y reiniciar lista de preguntas si ya se han leído todas.
-*(ENH) Control de errores en queries a Preguntas. 
+*(ENH) Control de errores en queries a Preguntas.
+*(ENH) Acceso a una API de Internet utilizando Retrofit.

@@ -4,8 +4,10 @@ import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -37,7 +39,7 @@ fun MainScreen(title: String, texto: String, onOpenScreen: (screenName: String) 
 }
 
 @Composable
-private fun MainContent(buttons: List<Pair<String, () -> Unit>>, paddingValues: PaddingValues, title: String, texto: String) {
+private fun MainContent(buttons: List<Pair<String, () -> Unit>>, paddingValues: PaddingValues, title: String, textoAPI: String) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -49,20 +51,31 @@ private fun MainContent(buttons: List<Pair<String, () -> Unit>>, paddingValues: 
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillBounds
         )
-        //Lista de botones
-        LazyColumn(
+        Column(
             modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(62.dp, Alignment.CenterVertically)
+                .fillMaxSize()
+                .padding(paddingValues),
+            verticalArrangement = Arrangement.spacedBy(62.dp, Alignment.CenterVertically),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            items(buttons) { button ->
-                CustomButton(
-                    texto = button.first,
-                    onClick = button.second
-                )
-                Text(text = texto)
+            // Lista de botones
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(62.dp, Alignment.CenterVertically)
+            ) {
+                items(buttons) { button ->
+                    CustomButton(
+                        texto = button.first,
+                        onClick = button.second
+                    )
+                }
             }
+
+            // Text at the bottom
+            Text(
+                text = textoAPI,
+                modifier = Modifier.padding(bottom = 16.dp) // Add some padding
+            )
         }
     }
 }

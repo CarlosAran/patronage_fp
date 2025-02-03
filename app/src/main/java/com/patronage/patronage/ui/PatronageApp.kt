@@ -16,15 +16,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.patronage.patronage.data.network.ChuckNorrisService
+import com.patronage.patronage.data.network.NetworkModule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
-import okhttp3.MediaType
-import retrofit2.Retrofit
 
 /*@Serializable
 object Preguntas
@@ -58,14 +54,10 @@ fun PatronageApp() {
     if (checkForInternet(LocalContext.current)) {
         //Llamo a la API para descargar las preguntas
         //TODO: Cambiar API chucknorris por API de preguntas
-        val json = Json{
-            ignoreUnknownKeys = true
-        }
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.chucknorris.io/")
-            .addConverterFactory(json.asConverterFactory(MediaType.get("application/json")))
-            .build()
-        val service = retrofit.create(ChuckNorrisService::class.java)
+        val json = NetworkModule.providesJson()
+        val retrofit = NetworkModule.providesChuckNorrisAPI(json)
+        val service = NetworkModule.providesChuckNorrisService(retrofit)
+
         LaunchedEffect(Unit) {
             GlobalScope.launch(Dispatchers.Main) {
                 delay(200)
