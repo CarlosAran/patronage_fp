@@ -16,16 +16,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.patronage.patronage.data.EventoBean
 import com.patronage.patronage.ui.theme.Dimens
 import com.patronage.patronage.ui.theme.PatronageTheme
 
 @Composable
-fun EventosScreen(navController: NavController, vm: EventosViewModel = hiltViewModel()) {
+fun EventosScreen(onBackClick: () -> Unit, vm: EventosViewModel = hiltViewModel()) {
     val state by vm.state.collectAsState() // Observer StateFlow
 
     Scaffold(
@@ -34,7 +31,12 @@ fun EventosScreen(navController: NavController, vm: EventosViewModel = hiltViewM
         bottomBar = { CustomBottomBar() },
         content = { paddingValues ->
             if (state.evento != null) {
-                EventosContent(navController, paddingValues, state.evento!!, state.error)
+                EventosContent(
+                    paddingValues = paddingValues,
+                    evento = state.evento!!,
+                    error = state.error,
+                    onBackClick = onBackClick
+                )
             } else {
                 Column(
                     modifier = Modifier
@@ -47,7 +49,6 @@ fun EventosScreen(navController: NavController, vm: EventosViewModel = hiltViewM
                         text = "Cargando evento...",
                         textAlign = androidx.compose.ui.text.style.TextAlign.Center
                     )
-                    BackButton(navController)
                 }
             }
         }
@@ -59,7 +60,7 @@ fun EventosScreen(navController: NavController, vm: EventosViewModel = hiltViewM
 }
 
 @Composable
-private fun EventosContent(navController: NavController, paddingValues: PaddingValues, evento: EventoBean, error: String?) {
+private fun EventosContent(paddingValues: PaddingValues, evento: EventoBean, error: String?, onBackClick: () -> Unit) {
     Column(
         modifier = Modifier
             .padding(paddingValues)
@@ -70,24 +71,14 @@ private fun EventosContent(navController: NavController, paddingValues: PaddingV
         Text(
             text = error ?: evento.texto
         )
-        BackButton(navController)
-    }
-}
-
-@Composable
-fun BackButton(navController: NavController) {
-    Button(modifier =
-        Modifier.padding(vertical = 18.dp), onClick = { navController.popBackStack() }) {
-        Text("Back")
+        Button(onClick = onBackClick) { Text("Volver") }
     }
 }
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable
 fun EventosPreview() {
-    val navController = rememberNavController()
-
     PatronageTheme() {
-        EventosScreen(navController)
+        EventosScreen(onBackClick = {})
     }
 }

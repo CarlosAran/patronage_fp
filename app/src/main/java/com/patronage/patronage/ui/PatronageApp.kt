@@ -50,8 +50,12 @@ fun PatronageApp() {
                 mainViewModel.AbrirPantalla(navController, screenName)
             }
         }
-        composable("Preguntas") { PreguntasScreen(navController) }
-        composable("Eventos") { EventosScreen(navController) }
+        composable("Preguntas") {
+            PreguntasScreen(onBackClick = { navController.popBackStack() })
+        }
+        composable("Eventos") {
+            EventosScreen(onBackClick = { navController.popBackStack() })
+        }
     }
 
     //Llamada a API

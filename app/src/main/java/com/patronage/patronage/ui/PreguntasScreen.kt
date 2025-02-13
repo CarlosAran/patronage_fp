@@ -19,14 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.patronage.patronage.data.PreguntaBean
 import com.patronage.patronage.ui.theme.Dimens
 import com.patronage.patronage.ui.theme.PatronageTheme
 
 @Composable
-fun PreguntasScreen(navController: NavController, vm: PreguntasViewModel = hiltViewModel()) {
+fun PreguntasScreen(onBackClick: () -> Unit, vm: PreguntasViewModel = hiltViewModel()) {
     val state by vm.state.collectAsState() // Observer StateFlow
 
     Scaffold(
@@ -35,7 +33,13 @@ fun PreguntasScreen(navController: NavController, vm: PreguntasViewModel = hiltV
         bottomBar = { CustomBottomBar() },
         content = { paddingValues ->
             if (state.pregunta != null) {
-                PreguntasContent(navController, paddingValues, state.pregunta!!, state.error, state.joke)
+                PreguntasContent(
+                    paddingValues = paddingValues,
+                    pregunta = state.pregunta!!,
+                    error = state.error,
+                    joke = state.joke,
+                    onBackClick = onBackClick
+                )
             } else {
                 Column(
                     modifier = Modifier
@@ -48,7 +52,6 @@ fun PreguntasScreen(navController: NavController, vm: PreguntasViewModel = hiltV
                         text = "Cargando pregunta...",
                         textAlign = androidx.compose.ui.text.style.TextAlign.Center
                     )
-                    BackButton(navController)
                 }
             }
         }
@@ -61,7 +64,7 @@ fun PreguntasScreen(navController: NavController, vm: PreguntasViewModel = hiltV
 
 
 @Composable
-private fun PreguntasContent(navController: NavController, paddingValues: PaddingValues, pregunta: PreguntaBean, error: String?, joke: String?) {
+private fun PreguntasContent(paddingValues: PaddingValues, pregunta: PreguntaBean, error: String?, joke: String?, onBackClick: () -> Unit) {
     Column(
         modifier = Modifier
             .padding(paddingValues)
@@ -84,17 +87,16 @@ private fun PreguntasContent(navController: NavController, paddingValues: Paddin
                 modifier = Modifier.padding(top = 16.dp)
             )
         }
+
+        Button(onClick = onBackClick) { Text("Volver") }
     }
 }
-
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable
 fun PreguntasPreview() {
-    val navController = rememberNavController()
-
     PatronageTheme() {
-        PreguntasScreen(navController)
+        PreguntasScreen(onBackClick = {})
     }
 }
 

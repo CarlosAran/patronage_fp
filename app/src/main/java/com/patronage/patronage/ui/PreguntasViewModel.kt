@@ -53,6 +53,7 @@ class PreguntasViewModel @Inject constructor(
 
     fun loadJoke() {
         viewModelScope.launch {
+
             try {
                 val joke = preguntasRepo.getRandomJoke()
                 _state.value = _state.value.copy(joke = joke)
