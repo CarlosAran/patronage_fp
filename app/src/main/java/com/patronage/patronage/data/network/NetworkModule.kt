@@ -20,15 +20,15 @@ object NetworkModule {
         ignoreUnknownKeys = true
     }
 
-    //TODO: Cambiar API chucknorris por API de preguntas
     @Singleton
     @Provides
-    fun providesChuckNorrisAPI(json: Json): Retrofit = Retrofit.Builder()
+    fun providesChuckNorrisRetrofit(json: Json): Retrofit = Retrofit.Builder()
         .baseUrl("https://api.chucknorris.io/")
         .addConverterFactory(json.asConverterFactory(MediaType.get("application/json")))
         .build()
 
     @Singleton
     @Provides
-    fun providesChuckNorrisService(retrofit: Retrofit):ChuckNorrisService = retrofit.create(ChuckNorrisService::class.java)
+    fun providesChuckNorrisService(retrofit: Retrofit): ChuckNorrisService =
+        retrofit.create(ChuckNorrisService::class.java)
 }

@@ -17,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -34,7 +35,7 @@ fun PreguntasScreen(navController: NavController, vm: PreguntasViewModel = hiltV
         bottomBar = { CustomBottomBar() },
         content = { paddingValues ->
             if (state.pregunta != null) {
-                PreguntasContent(navController, paddingValues, state.pregunta!!, state.error)
+                PreguntasContent(navController, paddingValues, state.pregunta!!, state.error, state.joke)
             } else {
                 Column(
                     modifier = Modifier
@@ -60,7 +61,7 @@ fun PreguntasScreen(navController: NavController, vm: PreguntasViewModel = hiltV
 
 
 @Composable
-private fun PreguntasContent(navController: NavController, paddingValues: PaddingValues, pregunta: PreguntaBean, error: String?) {
+private fun PreguntasContent(navController: NavController, paddingValues: PaddingValues, pregunta: PreguntaBean, error: String?, joke: String?) {
     Column(
         modifier = Modifier
             .padding(paddingValues)
@@ -75,6 +76,14 @@ private fun PreguntasContent(navController: NavController, paddingValues: Paddin
         Button(onClick = { responder(2) }) { Text(pregunta.resp_2) }
         Button(onClick = { responder(3) }) { Text(pregunta.resp_3) }
         Button(onClick = { responder(4) }) { Text(pregunta.resp_4) }
+
+        //Sólo para testear que funciona lo de los repositorios
+        joke?.let {
+            Text(
+                text = "🤠 Chuck Norris says: $it",
+                modifier = Modifier.padding(top = 16.dp)
+            )
+        }
     }
 }
 

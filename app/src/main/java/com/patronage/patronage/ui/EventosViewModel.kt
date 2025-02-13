@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.patronage.patronage.data.EventoBean
 import com.patronage.patronage.data.EventoDao
+import com.patronage.patronage.data.EventosRepo
+import com.patronage.patronage.data.PreguntasRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EventosViewModel @Inject constructor(
-    private val eventoDao: EventoDao
+    private val eventoDao: EventoDao,
+    private val eventosRepo: EventosRepo
 ) : ViewModel() {
     // StateFlow que expone el estado actual de las preguntas
     private val _state = MutableStateFlow(EventosState())
@@ -30,14 +33,14 @@ class EventosViewModel @Inject constructor(
     fun loadEvento() {
         viewModelScope.launch {
             try {
-                var randomEvento = eventoDao.getRandomEvento()
+                var randomEvento = eventosRepo.getRandomEvento()
                 if (randomEvento == null) {
-                    eventoDao.resetEventos()
-                    randomEvento = eventoDao.getRandomEvento()
+                    eventosRepo.resetEventos()
+                    randomEvento = eventosRepo.getRandomEvento()
                 }
                 if (randomEvento != null) {
                     _state.value = _state.value.copy(evento = randomEvento)
-                    eventoDao.marcarEventoLeido(randomEvento.id)
+                    eventosRepo.marcarEventoLeido(randomEvento.id)
                 } else {
                     _state.value = _state.value.copy(error = "No se han podido cargar los eventos, por favor reinicie la aplicación")
                 }

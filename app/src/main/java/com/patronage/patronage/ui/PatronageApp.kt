@@ -46,7 +46,7 @@ fun PatronageApp() {
         //Estados para la navegación
         composable("Main"){
             //MainScreen(){ navController.navigate("Preguntas") }
-            MainScreen(state.title, "$jokeString") { screenName ->
+            MainScreen(state.title) { screenName ->
                 mainViewModel.AbrirPantalla(navController, screenName)
             }
         }
@@ -59,7 +59,7 @@ fun PatronageApp() {
         //Llamo a la API para descargar las preguntas
         //TODO: Cambiar API chucknorris por API de preguntas
         val json = NetworkModule.providesJson()
-        val retrofit = NetworkModule.providesChuckNorrisAPI(json)
+        val retrofit = NetworkModule.providesChuckNorrisRetrofit(json)
         val service = NetworkModule.providesChuckNorrisService(retrofit)
 
         LaunchedEffect(Unit) {

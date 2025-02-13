@@ -37,11 +37,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.patronage.patronage.R
-import com.patronage.patronage.ui.theme.Dimens
 import com.patronage.patronage.ui.theme.PatronageTheme
 
 @Composable
-fun MainScreen(title: String, texto: String, onOpenScreen: (screenName: String) -> Unit) {
+fun MainScreen(title: String, onOpenScreen: (screenName: String) -> Unit) {
     val buttons = listOf(
         Pair("Preguntas", { onOpenScreen("preguntas") }),
         Pair("Eventos", { onOpenScreen("eventos") })
@@ -50,13 +49,13 @@ fun MainScreen(title: String, texto: String, onOpenScreen: (screenName: String) 
         topBar = { CenteredTopBar(title) },
         bottomBar = { CustomBottomBar() },
         content = { paddingValues ->
-            MainContent(buttons, paddingValues, title, texto)
+            MainContent(buttons, paddingValues, title)
         }
     )
 }
 
 @Composable
-private fun MainContent(buttons: List<Pair<String, () -> Unit>>, paddingValues: PaddingValues, title: String, textoAPI: String) {
+private fun MainContent(buttons: List<Pair<String, () -> Unit>>, paddingValues: PaddingValues, title: String) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -87,13 +86,6 @@ private fun MainContent(buttons: List<Pair<String, () -> Unit>>, paddingValues: 
                     )
                 }
             }
-
-            // Text at the bottom
-            Text(
-                text = textoAPI,
-                modifier = Modifier.padding(bottom = 16.dp)
-                    .padding(horizontal = Dimens.screenPadding)
-            )
         }
     }
 }
@@ -102,7 +94,7 @@ private fun MainContent(buttons: List<Pair<String, () -> Unit>>, paddingValues: 
 @Composable
 fun PreviewMainContent() {
     PatronageTheme() {
-        MainScreen("PATRONAGE", "", onOpenScreen = { /* No-op for preview */ })
+        MainScreen("PATRONAGE", onOpenScreen = { /* No-op for preview */ })
     }
 }
 

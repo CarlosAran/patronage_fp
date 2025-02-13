@@ -41,3 +41,6 @@ Tarea 4:
 *(ENH) Limpiada la clase MainActivity.
 *(ENH) Implementación de StateFlow en los ViewModels.
 *(FIX) Quitar fijar pantalla a modo Retrato.
+
+Tarea 5:
+*(NEW) Repositorios para manejar la lógica de BDD, shared preferences y APIs.
