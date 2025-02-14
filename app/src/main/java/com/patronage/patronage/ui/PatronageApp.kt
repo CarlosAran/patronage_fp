@@ -28,7 +28,7 @@ object Preguntas
 @Serializable
 object Main*/
 
-data class MainState (
+data class MainState(
     val title: String = "PATRONAGE",
     val texto: String = "texto",
 )
@@ -44,7 +44,7 @@ fun PatronageApp() {
     //Navegación
     NavHost(navController = navController, startDestination = "Main") {
         //Estados para la navegación
-        composable("Main"){
+        composable("Main") {
             //MainScreen(){ navController.navigate("Preguntas") }
             MainScreen(state.title) { screenName ->
                 mainViewModel.AbrirPantalla(navController, screenName)
@@ -76,8 +76,8 @@ fun PatronageApp() {
         }
         //TODO: Si hay versión nueva, descargar y actualizar la BDD
         //if(...) {
-            //Toast.makeText(LocalContext.current, "Se están descargando nuevas preguntas", Toast.LENGTH_LONG).show()
-            //TODO: ¿Necesito permisos para modificar la BDD? Controlar caso sin permisos. Si el usuario no los da que ni intente conectarse a internet.
+        //Toast.makeText(LocalContext.current, "Se están descargando nuevas preguntas", Toast.LENGTH_LONG).show()
+        //TODO: ¿Necesito permisos para modificar la BDD? Controlar caso sin permisos. Si el usuario no los da que ni intente conectarse a internet.
         //}
     } else {
         //Si no hay conexión a internet, se salta la llamada a la API y aviso al usuario

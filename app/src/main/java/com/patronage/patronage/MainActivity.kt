@@ -1,4 +1,4 @@
-package com.patronage.patronage.ui
+package com.patronage.patronage
 
 import android.Manifest
 import android.os.Build
@@ -10,8 +10,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.LaunchedEffect
-import com.patronage.patronage.PatronageApplication
 import com.patronage.patronage.data.sqlite.SQLiteHelper
+import com.patronage.patronage.ui.PatronageApp
 import com.patronage.patronage.ui.theme.PatronageTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers

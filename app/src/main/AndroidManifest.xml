@@ -23,7 +23,7 @@
         android:theme="@style/Theme.Patronage"
         tools:targetApi="31">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Patronage"
