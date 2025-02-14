@@ -45,3 +45,4 @@ Tarea 4:
 Tarea 5:
 *(NEW) Repositorios para manejar la lógica de BDD, shared preferences y APIs.
 *(FIX) Pasar función lambda para onBackClick en lugar de navController.
+*(NEW) Use Case para Preguntas, shared preferences y API de Chuck Norris.
