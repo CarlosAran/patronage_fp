@@ -1,10 +1,14 @@
 package com.patronage.patronage.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import com.patronage.patronage.data.EventoDao
 import com.patronage.patronage.data.EventosRepo
+import com.patronage.patronage.data.PrefsRepo
 import com.patronage.patronage.data.PreguntaDao
 import com.patronage.patronage.data.PreguntasRepo
+import com.patronage.patronage.data.dataStore
 import com.patronage.patronage.data.network.ChuckNorrisService
 import dagger.Module
 import dagger.Provides
@@ -33,5 +37,15 @@ object RepositoryModule {
         context: Context
     ): EventosRepo {
         return EventosRepo(eventoDao, context)
+    }
+    @Provides
+    @Singleton
+    fun provideDataStore(@dagger.hilt.android.qualifiers.ApplicationContext context: Context): DataStore<androidx.datastore.preferences.core.Preferences> {
+        return context.dataStore
+    }
+    @Provides
+    @Singleton
+    fun providePreferencesRepo(dataStore: DataStore<Preferences>, @dagger.hilt.android.qualifiers.ApplicationContext context: Context): PrefsRepo {
+        return PrefsRepo(context, dataStore)
     }
 }

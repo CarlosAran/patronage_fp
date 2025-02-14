@@ -18,6 +18,10 @@ class PreguntasRepo @Inject constructor(
 
     private val LAST_QUESTION_KEY = stringPreferencesKey("last_question")
 
+    suspend fun insertarPregunta(pregunta: PreguntaBean) {
+        preguntaDao.insertaPregunta(pregunta)
+    }
+
     suspend fun getRandomPregunta(): PreguntaBean? {
         return preguntaDao.getRandomPregunta()
     }

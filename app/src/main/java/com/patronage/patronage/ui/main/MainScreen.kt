@@ -1,4 +1,4 @@
-package com.patronage.patronage.ui
+package com.patronage.patronage.ui.main
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image

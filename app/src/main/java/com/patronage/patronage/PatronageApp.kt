@@ -1,4 +1,4 @@
-package com.patronage.patronage.ui
+package com.patronage.patronage
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -18,6 +18,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.patronage.patronage.data.network.NetworkModule
+import com.patronage.patronage.ui.eventos.EventosScreen
+import com.patronage.patronage.ui.main.MainScreen
+import com.patronage.patronage.ui.main.MainViewModel
+import com.patronage.patronage.ui.preguntas.PreguntasScreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay

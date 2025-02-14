@@ -1,4 +1,4 @@
-package com.patronage.patronage.ui
+package com.patronage.patronage.ui.eventos
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
@@ -18,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.patronage.patronage.data.EventoBean
+import com.patronage.patronage.ui.main.CenteredTopBar
+import com.patronage.patronage.ui.main.CustomBottomBar
 import com.patronage.patronage.ui.theme.Dimens
 import com.patronage.patronage.ui.theme.PatronageTheme
 

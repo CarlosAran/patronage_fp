@@ -11,7 +11,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.LaunchedEffect
 import com.patronage.patronage.data.sqlite.SQLiteHelper
-import com.patronage.patronage.ui.PatronageApp
 import com.patronage.patronage.ui.theme.PatronageTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -36,6 +35,7 @@ class MainActivity : ComponentActivity() {
                 // Crear registros en la base de datos de Room y mostrarlos en el log
                 //db.preguntaDao().insertAll(newPreguntaBean("¿Cuánto es uno más uno?", "5", "2", "3", "1", 2, "Ganas 2 monedas"))
                 //db.eventoDao().insertAll(newEventoBean("Ha aparecido un brote de tronovirus. Envía a todos tus Guardias al Hospital.", 0))
+                //TODO: Si la BDD está vacía, rellenarla con unas poquitas preguntas y eventos añadidas desde aquí
                 val preguntas = db.preguntaDao().getAll();
                 preguntas.forEach{
                     Log.d("PatronageDB-Room", "Room ${it.toString()}")

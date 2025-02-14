@@ -1,4 +1,4 @@
-package com.patronage.patronage.ui
+package com.patronage.patronage.ui.preguntas
 
 import android.content.res.Configuration
 import android.util.Log
@@ -20,6 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.patronage.patronage.data.PreguntaBean
+import com.patronage.patronage.ui.main.CenteredTopBar
+import com.patronage.patronage.ui.main.CustomBottomBar
 import com.patronage.patronage.ui.theme.Dimens
 import com.patronage.patronage.ui.theme.PatronageTheme
 

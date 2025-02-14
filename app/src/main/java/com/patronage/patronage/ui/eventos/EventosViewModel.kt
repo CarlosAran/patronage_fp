@@ -1,11 +1,10 @@
-package com.patronage.patronage.ui
+package com.patronage.patronage.ui.eventos
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.patronage.patronage.data.EventoBean
 import com.patronage.patronage.data.EventoDao
 import com.patronage.patronage.data.EventosRepo
-import com.patronage.patronage.data.PreguntasRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
