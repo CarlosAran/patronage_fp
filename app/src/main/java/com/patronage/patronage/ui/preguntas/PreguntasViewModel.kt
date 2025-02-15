@@ -35,7 +35,10 @@ class PreguntasViewModel @Inject constructor(
     data class PreguntasState(
         val pregunta: PreguntaBean? = null,
         val error: String? = null,
-        val joke: String? = null
+        val joke: String? = null,
+        val showDialog: Boolean = false,
+        val dialogTitle: String = "",
+        val dialogMessage: String = ""
     )
 
     //Operaciones en la BDD
@@ -75,6 +78,28 @@ class PreguntasViewModel @Inject constructor(
                 _state.value = _state.value.copy(error = "No se han podido cargar las preguntas, por favor reinicie la aplicación")
             }
         }
+    }
+
+    fun responder(selectedAnswer: Int) {
+        val pregunta = _state.value.pregunta
+        if (pregunta != null) {
+            val isCorrect = selectedAnswer == pregunta.resp_correcta
+            val title = if (isCorrect) "¡Correcto!" else "Incorrecto"
+            val message = if (isCorrect) {
+                "${pregunta.recompensa}"
+            } else {
+                "Respuesta incorrecta"
+            }
+            _state.value = _state.value.copy(
+                showDialog = true,
+                dialogTitle = title,
+                dialogMessage = message
+            )
+        }
+    }
+
+    fun dismissDialog() {
+        _state.value = _state.value.copy(showDialog = false)
     }
 
     fun loadJoke() {

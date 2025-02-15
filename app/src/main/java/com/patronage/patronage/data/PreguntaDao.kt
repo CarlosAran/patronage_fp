@@ -10,6 +10,8 @@ interface PreguntaDao {
     suspend fun getAll(): List<PreguntaBean>
     @Query("SELECT * FROM PreguntaBean WHERE leida = 0 ORDER BY RANDOM() LIMIT 1;")
     suspend fun getRandomPregunta(): PreguntaBean?
+    @Query("SELECT COUNT(*) FROM PreguntaBean")
+    suspend fun getCount(): Int
 
     @Insert
     suspend fun insertaPregunta(pregunta: PreguntaBean)

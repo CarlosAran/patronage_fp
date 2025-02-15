@@ -10,6 +10,8 @@ interface EventoDao {
     suspend fun getAllEventos(): List<EventoBean>
     @Query("SELECT * FROM EventoBean WHERE leido = 0 ORDER BY RANDOM() LIMIT 1;")
     suspend fun getRandomEvento(): EventoBean?
+    @Query("SELECT COUNT(*) FROM EventoBean")
+    suspend fun getCount(): Int
 
     @Insert
     suspend fun insertaEvento(evento: EventoBean)

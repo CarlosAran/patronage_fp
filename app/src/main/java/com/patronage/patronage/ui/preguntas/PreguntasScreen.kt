@@ -1,17 +1,16 @@
 package com.patronage.patronage.ui.preguntas
 
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -40,6 +39,7 @@ fun PreguntasScreen(onBackClick: () -> Unit, vm: PreguntasViewModel = hiltViewMo
                     pregunta = state.pregunta!!,
                     error = state.error,
                     joke = state.joke,
+                    onAnswerClick = { answer -> vm.responder(answer) },
                     onBackClick = onBackClick
                 )
             } else {
@@ -59,14 +59,38 @@ fun PreguntasScreen(onBackClick: () -> Unit, vm: PreguntasViewModel = hiltViewMo
         }
     )
 
-    LaunchedEffect(Unit) {
-        vm.loadPregunta()
+    if (state.showDialog) {
+        AlertDialog(
+            onDismissRequest = { vm.dismissDialog() },
+            title = { Text(text = state.dialogTitle) },
+            text = { Text(text = state.dialogMessage) },
+            confirmButton = {
+                Button(onClick = {
+                    vm.dismissDialog()
+                    vm.loadPregunta()
+                }) {
+                    Text("Nueva pregunta")
+                }
+            },
+            dismissButton = {
+                Button(onClick = {
+                    vm.dismissDialog()
+                    onBackClick()
+                }) {
+                    Text("Volver")
+                }
+            }
+        )
     }
+
+    /*LaunchedEffect(Unit) {
+        vm.loadPregunta()
+    }*/
 }
 
 
 @Composable
-private fun PreguntasContent(paddingValues: PaddingValues, pregunta: PreguntaBean, error: String?, joke: String?, onBackClick: () -> Unit) {
+private fun PreguntasContent(paddingValues: PaddingValues, pregunta: PreguntaBean, error: String?, onAnswerClick: (Int) -> Unit, joke: String?, onBackClick: () -> Unit) {
     Column(
         modifier = Modifier
             .padding(paddingValues)
@@ -77,10 +101,10 @@ private fun PreguntasContent(paddingValues: PaddingValues, pregunta: PreguntaBea
         Text(
             text = error ?: pregunta.texto
         )
-        Button(onClick = { responder(1) }) { Text(pregunta.resp_1) }
-        Button(onClick = { responder(2) }) { Text(pregunta.resp_2) }
-        Button(onClick = { responder(3) }) { Text(pregunta.resp_3) }
-        Button(onClick = { responder(4) }) { Text(pregunta.resp_4) }
+        Button(onClick = { onAnswerClick(1) }) { Text(pregunta.resp_1) }
+        Button(onClick = { onAnswerClick(2) }) { Text(pregunta.resp_2) }
+        Button(onClick = { onAnswerClick(3) }) { Text(pregunta.resp_3) }
+        Button(onClick = { onAnswerClick(4) }) { Text(pregunta.resp_4) }
 
         //Sólo para testear que funciona lo de los repositorios
         joke?.let {
@@ -90,7 +114,7 @@ private fun PreguntasContent(paddingValues: PaddingValues, pregunta: PreguntaBea
             )
         }
 
-        Button(onClick = onBackClick) { Text("Volver") }
+        //Button(onClick = onBackClick) { Text("Volver") }
     }
 }
 
@@ -100,10 +124,4 @@ fun PreguntasPreview() {
     PatronageTheme() {
         PreguntasScreen(onBackClick = {})
     }
-}
-
-//TODO: Método responder preguntas
-fun responder(selectedAnswer: Int) {
-    //TODO: Buscar en BDD por id_pregunta si el campo "respuesta_correcta" es la seleccionada
-    Log.d("PatronageApplication", "Selected answer: $selectedAnswer")
 }

@@ -46,3 +46,6 @@ Tarea 5:
 *(NEW) Repositorios para manejar la lógica de BDD, shared preferences y APIs.
 *(FIX) Pasar función lambda para onBackClick en lugar de navController.
 *(NEW) Use Case para Preguntas, shared preferences y API de Chuck Norris.
+*(NEW) AlertDialog al responder preguntas.
+*(ENH) Manejo de tablas vacías (temporal).
+*(FIX) loadPregunta y loadEvento ya no se llaman dos veces al abrir las pantallas.
