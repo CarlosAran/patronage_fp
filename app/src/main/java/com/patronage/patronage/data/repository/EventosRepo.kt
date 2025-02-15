@@ -14,6 +14,10 @@ class EventosRepo @Inject constructor(
 ) {
     private val dataStore = context.dataStore
 
+    suspend fun insertarEvento(evento: EventoBean) {
+        eventoDao.insertaEvento(evento)
+    }
+
     suspend fun getRandomEvento(): EventoBean? {
         return eventoDao.getRandomEvento()
     }

@@ -6,9 +6,9 @@ import com.patronage.patronage.data.PreguntaBean
 import com.patronage.patronage.data.PreguntaDao
 import com.patronage.patronage.data.PreguntasRepo
 import com.patronage.patronage.domain.GetJokeUseCase
-import com.patronage.patronage.domain.GetRandomPreguntaUseCase
-import com.patronage.patronage.domain.MarcarPreguntaLeidaUseCase
-import com.patronage.patronage.domain.ResetPreguntasUseCase
+import com.patronage.patronage.domain.preguntas.GetRandomPreguntaUseCase
+import com.patronage.patronage.domain.preguntas.MarcarPreguntaLeidaUseCase
+import com.patronage.patronage.domain.preguntas.ResetPreguntasUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

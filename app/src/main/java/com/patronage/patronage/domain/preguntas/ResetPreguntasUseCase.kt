@@ -1,17 +1,16 @@
-package com.patronage.patronage.domain
+package com.patronage.patronage.domain.preguntas
 
-import com.patronage.patronage.data.PreguntaBean
 import com.patronage.patronage.data.PreguntasRepo
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class GetRandomPreguntaUseCase  @Inject constructor(
+class ResetPreguntasUseCase  @Inject constructor(
     private val repository: PreguntasRepo
 ){
-    suspend operator fun invoke(): PreguntaBean? {
+    suspend operator fun invoke() {
         return withContext(IO) {
-            repository.getRandomPregunta()
+            repository.resetPreguntas()
         }
     }
 }

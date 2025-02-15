@@ -49,3 +49,4 @@ Tarea 5:
 *(NEW) AlertDialog al responder preguntas.
 *(ENH) Manejo de tablas vacías (temporal).
 *(FIX) loadPregunta y loadEvento ya no se llaman dos veces al abrir las pantallas.
+*(NEW) Use Case para Eventos.
