@@ -10,6 +10,7 @@ import com.patronage.patronage.domain.preguntas.GetRandomPreguntaUseCase
 import com.patronage.patronage.domain.preguntas.MarcarPreguntaLeidaUseCase
 import com.patronage.patronage.domain.preguntas.ResetPreguntasUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -43,7 +44,7 @@ class PreguntasViewModel @Inject constructor(
 
     //Operaciones en la BDD
     fun loadPregunta() {
-        viewModelScope.launch {
+        viewModelScope.launch(IO) {
             /* Repo
             try {
                 var randomPregunta = preguntasRepo.getRandomPregunta()
@@ -103,7 +104,7 @@ class PreguntasViewModel @Inject constructor(
     }
 
     fun loadJoke() {
-        viewModelScope.launch {
+        viewModelScope.launch(IO) {
             try {
                 /*val joke = preguntasRepo.getRandomJoke()
                 _state.value = _state.value.copy(joke = joke)*/

@@ -50,3 +50,5 @@ Tarea 5:
 *(ENH) Manejo de tablas vacías (temporal).
 *(FIX) loadPregunta y loadEvento ya no se llaman dos veces al abrir las pantallas.
 *(NEW) Use Case para Eventos.
+
+*(FIX) Uso del dispatcher "IO" en los viewModelScope.

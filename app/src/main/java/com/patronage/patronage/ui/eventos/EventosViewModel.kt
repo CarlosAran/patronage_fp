@@ -9,6 +9,7 @@ import com.patronage.patronage.domain.eventos.GetRandomEventoUseCase
 import com.patronage.patronage.domain.eventos.MarcarEventoLeidoUseCase
 import com.patronage.patronage.domain.eventos.ResetEventosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -36,7 +37,7 @@ class EventosViewModel @Inject constructor(
 
     //Operaciones en la BDD
     fun loadEvento() {
-        viewModelScope.launch {
+        viewModelScope.launch(IO) {
             /*Repo*/
             /*try {
                 var randomEvento = eventosRepo.getRandomEvento()

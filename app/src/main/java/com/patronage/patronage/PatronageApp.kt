@@ -71,7 +71,7 @@ fun PatronageApp() {
         val service = NetworkModule.providesChuckNorrisService(retrofit)
 
         LaunchedEffect(Unit) {
-            GlobalScope.launch(Dispatchers.Main) {
+            GlobalScope.launch(Dispatchers.IO) {
                 delay(200)
                 val joke = service.getRandomJoke()
                 Log.d("PatronageApplication", "$joke")
