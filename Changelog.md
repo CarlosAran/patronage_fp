@@ -52,3 +52,4 @@ Tarea 5:
 *(NEW) Use Case para Eventos.
 
 *(FIX) Uso del dispatcher "IO" en los viewModelScope.
+*(ENH) Eliminar UseCaseModule. No hacía falta.
