@@ -53,3 +53,4 @@ Tarea 5:
 
 *(FIX) Uso del dispatcher "IO" en los viewModelScope.
 *(ENH) Eliminar UseCaseModule. No hacía falta.
+*(ENH) Forzar modo retrato

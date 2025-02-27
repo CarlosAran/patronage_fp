@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
             withContext(Dispatchers.IO){
                 Log.d("GlobalScope", "launch: ${Thread.currentThread()}")
 
-                //TODO: Borrar esto después de la entrega de la tarea
+                //TODO: Pasar esto al módulo en el que se hace el build de la BDD, justo después de build()
                 db.preguntaDao().truncateTable()
                 db.eventoDao().truncateTable()
                 //Si la BDD está vacía, rellenarla con unas poquitas preguntas y eventos añadidas "a mano". Sólo para entrega de tarea.
